@@ -7,7 +7,7 @@ Character Selection: Choose from a cast of characters within the generated story
 Interactive Q&A: Ask questions to selected characters and receive in-character responses.
 Multiple Genres: Supports various story genres including fantasy, sci-fi, mystery, and more.
 
-Acknowledgments
+Acknowledgments:
 Gemini for AI Model
 NextJs for frontend
 ExpressJs for backend
