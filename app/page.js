@@ -40,7 +40,7 @@ export default function Home() {
   const GenerateStory = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/api/generate-story");
+      const response = await fetch("https://storyguy-backend-production.up.railway.app/api/generate-story");
       const result = await response.json();
       setInput(result.response);
       console.log(result.response)
@@ -56,7 +56,7 @@ export default function Home() {
   async function sendPrompt() {
     const prompt = input;
     try {
-      const response = await fetch("http://localhost:8000/api/send-prompt", {
+      const response = await fetch("https://storyguy-backend-production.up.railway.app/api/send-prompt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
