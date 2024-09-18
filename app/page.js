@@ -181,14 +181,14 @@ export default function Home() {
                 <b>Select A Character you want to ask questions</b></div>
               <div className="flex justify-center items-center mb-32 gap-5">
                 {characters.map((character, index) => (
-                  <div >
-                    <button key={index} onClick={() => {
-                      setSelectedCharacter(character)
-                      setShowcharacterbtn(true)
-                    }} className=" px-4 py-2 text-black backdrop-blur-sm border border-black rounded-md hover:shadow-[0px_0px_4px_4px_rgba(0,0,0,0.1)] bg-white/[0.2] text-sm transition duration-200">
-                      {character}
-                    </button>
-                  </div>
+
+                  <button key={index} onClick={() => {
+                    setSelectedCharacter(character)
+                    setShowcharacterbtn(true)
+                  }} className=" px-4 py-2 text-black backdrop-blur-sm border border-black rounded-md hover:shadow-[0px_0px_4px_4px_rgba(0,0,0,0.1)] bg-white/[0.2] text-sm transition duration-200">
+                    {character}
+                  </button>
+
                 ))
 
                 }
