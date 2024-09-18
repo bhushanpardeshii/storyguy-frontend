@@ -14,13 +14,13 @@ import { Dancing_Script } from "next/font/google";
 const dancingScript = Dancing_Script({ subsets: ["latin"] })
 
 import { PlaceholdersAndVanishInput } from "@/components/placeholders-and-vanish-input";
+import { cn } from "@/lib/utils";
 
 const placeholders = [
-  "What's the first rule of Fight Club?",
-  "Who is Tyler Durden?",
-  "Where is Andrew Laeddis Hiding?",
-  "Write a Javascript method to reverse a string",
-  "How to assemble your own PC?",
+  "What is your name?",
+  "What was relation between you and other character",
+  "How was the other character?",
+  "Was the other character your friend?",
 ];
 
 export default function Home() {
@@ -35,6 +35,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [showcharacterbtn, setShowcharacterbtn] = useState(false)
   const nextpage = useRef(null)
+  const charpage = useRef(null)
 
 
   const GenerateStory = async () => {
@@ -54,7 +55,12 @@ export default function Home() {
     }
   }
   async function sendPrompt() {
+    setLoading(true)
     const prompt = input;
+    if (input == "") {
+      alert("Give Story to Generate characters")
+      return
+    }
     try {
       const response = await fetch("https://storyguy-backend-production.up.railway.app/api/send-prompt", {
         method: "POST",
@@ -66,9 +72,13 @@ export default function Home() {
 
       const result = await response.json();
       let apiresponse = result.response;
-      const charactersArray = apiresponse?.split(",")
+      const charactersArray = apiresponse?.split(",");
       console.log(charactersArray)
       setCharacters(charactersArray)
+      setLoading(false)
+      if (charpage.current) {
+        charpage.current.scrollIntoView({ behavior: 'smooth' });
+      }
       setResponseText(result.response);
     }
     catch (error) {
@@ -140,7 +150,7 @@ export default function Home() {
                 <div className="loader ease-linear rounded-full border-2 border-t-1 border-gray-900 h-3 w-3 mr-2"></div>
               </button>
             ) : (
-              <button onClick={GenerateStory} className=" flex items-center justify-center text-sm shadow-[0_0_0_3px_#000000_inset] mt-16 px-6 py-2 bg-transparent border border-green-800 text-gray-900 rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
+              <button onClick={GenerateStory} className=" flex items-center justify-center text-sm  mt-16 px-6 py-2 bg-transparent border-4 border-green-900 text-gray-900 rounded-lg font-bold transform hover:-translate-y-1 transition duration-400 hover:bg-[#ACE1AF]">
                 Generate Story
               </button>
             )
@@ -159,15 +169,14 @@ export default function Home() {
 
               <Textarea className="text-red-900" value={input} onChange={(e) => setInput(e.target.value)} />
             </div>
-            <div className="flex items-center justify-center">
 
+            <div className="flex items-center justify-center">
               <Button onClick={sendPrompt} className="text-md mt-6 bg-transparent border-2 border-[#CD7F32] text-[#D2B48C] rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
                 Generate Characters</Button>
             </div>
+
           </div>
-          <div className="text-[#D2B48C] mt-4 flex justify-start" >
-            <p> <b>Scroll Down</b> to select character after Generating Characters</p>
-          </div>
+
 
         </div>
         <div className="min-h-screen  bg-characters p-3 bg-cover">
@@ -176,16 +185,16 @@ export default function Home() {
           </div>
           <div className="md:flex  justify-around">
 
-            <div className="flex-col justify-center items-center pt-10">
-              <div className="flex justify-center text-md md:text-xl px-2 mb-4 font-Dancing_Script text-[#250E0E] backdrop-blur-sm bg-white/30 rounded-full">
+            <div ref={charpage} className="flex-col justify-center items-center pt-10">
+              <div className="flex   justify-center text-md md:text-xl px-2 mb-4 font-Dancing_Script text-[#250E0E] backdrop-blur-sm bg-white/30 rounded-full">
                 <b>Select A Character you want to ask questions</b></div>
-              <div className="flex justify-center items-center mb-32 gap-5">
+              <div className=" grid grid-cols-3 justify-center items-center mb-32 gap-5">
                 {characters.map((character, index) => (
 
                   <button key={index} onClick={() => {
                     setSelectedCharacter(character)
                     setShowcharacterbtn(true)
-                  }} className=" px-4 py-2 text-black backdrop-blur-sm border border-black rounded-md hover:shadow-[0px_0px_4px_4px_rgba(0,0,0,0.1)] bg-white/[0.2] text-sm transition duration-200">
+                  }} className={cn(" px-4 py-2 text-black border border-black rounded-md hover:shadow-[0px_0px_4px_4px_rgba(0,0,0,0.1)] bg-white/[0.2] text-sm transition duration-200", character == selectedCharacter ? "bg-[#882D17] text-white" : " backdrop-blur-sm")}>
                     {character}
                   </button>
 
