@@ -41,7 +41,7 @@ export default function Home() {
   const GenerateStory = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://storyguy-backend.onrender.com");
+      const response = await fetch("https://storyguy-backend.onrender.com/api/generate-story");
       const result = await response.json();
       setInput(result.response);
       console.log(result.response)
@@ -62,7 +62,7 @@ export default function Home() {
       return
     }
     try {
-      const response = await fetch("https://storyguy-backend-production.up.railway.app/api/send-prompt", {
+      const response = await fetch("https://storyguy-backend.onrender.com/api/send-prompt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export default function Home() {
     if (!selectedCharacter) return;
     const prompt = input;
     try {
-      const response = await fetch("https://storyguy-backend-production.up.railway.app/api/role", {
+      const response = await fetch("https://storyguy-backend.onrender.com/api/role", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export default function Home() {
     const prompt = input;
 
     try {
-      const response = await fetch("https://storyguy-backend-production.up.railway.app/api/role", {
+      const response = await fetch("https://storyguy-backend.onrender.com/api/role", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
