@@ -41,7 +41,7 @@ export default function Home() {
   const GenerateStory = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://storyguy-backend-production.up.railway.app/api/generate-story");
+      const response = await fetch("https://storyguy-backend.onrender.com");
       const result = await response.json();
       setInput(result.response);
       console.log(result.response)
